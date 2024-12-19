@@ -1,0 +1,86 @@
+﻿<Window x:Class="TaskScheduler.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TaskScheduler"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="650" Width="1200">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Панель навигации -->
+            <RowDefinition Height="Auto"/>
+            <!-- Заголовок календаря -->
+            <RowDefinition Height="*"/>
+            <!-- Календарь -->
+            <RowDefinition Height="Auto"/>
+            <!-- Ввод задачи -->
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <!-- Левая часть - календарь -->
+            <ColumnDefinition Width="300"/>
+            <!-- Правая часть - ввод задач -->
+        </Grid.ColumnDefinitions>
+        <!-- Добавление изображения в качестве фона -->
+        <Grid.Background>
+            <ImageBrush ImageSource="Properties\FON.jpg"/>
+        </Grid.Background>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10" Grid.Row="0">
+            <Button Content="Предыдущий месяц" Click="PreviousMonth_Click" Width="150" />
+            <TextBlock x:Name="MonthTextBlock" FontSize="24" HorizontalAlignment="Center" Margin="10"/>
+            <Button Content="Следующий месяц" Click="NextMonth_Click" Width="150" />
+        </StackPanel>
+
+        <TextBlock Text="Календарь" FontSize="24" HorizontalAlignment="Left" Margin="10,20,0,20"/>
+
+        <ItemsControl Grid.Row="2" Name="CalendarGrid" Grid.Column="0">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Rows="6" Columns="7" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Border BorderThickness="1" Margin="5" Height="60" Width="80">
+                        <Border.BorderBrush>
+                            <SolidColorBrush Color="Black"/>
+                        </Border.BorderBrush>
+                        <Border.Background>
+                            <!-- Указываем путь к файлу -->
+                            <ImageBrush ImageSource="Properties\button.jpg"/>
+                        </Border.Background>
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TextBlock Text="{Binding Day}" FontSize="18" HorizontalAlignment="Center"/>
+                            <Button Content="Добавить" Background="LightGray" Margin="2,1,2,15" Click="AddTaskButton_Click" Height="30" Width="60" Tag="{Binding Day}"/>
+                        </StackPanel>
+                    </Border>
+                </DataTemplate>
+
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <StackPanel Grid.Row="2" Grid.Column="1" Margin="10">
+            <TextBlock Text="Введите задачи (каждая задача с новой строки):"/>
+            <TextBox x:Name="TaskDescriptionTextBox" Width="180" Height="80" AcceptsReturn="True" Opacity="0.5" />
+
+            <TextBlock Text="Выберите дни:"/>
+            <ListBox x:Name="DaysListBox" SelectionMode="Multiple" Height="100" Opacity="0.5" />
+
+            <Button x:Name="AddTasksButton" Content="Добавить задачи" Click="AddTasksButton_Click"/>
+            <ListBox x:Name="TasksListBox" Height="200" Opacity="0.5"/>
+
+            <Button x:Name="RemoveTaskButton" Content="удалить задачу" Click="RemoveTaskButton_Click"/>
+            <ListBox x:Name="RemoveTaskBox" Height="10" Opacity="0.5"/>
+
+            <Button x:Name="EditTaskButton" Content="рдактировать задачу" Click="EditTaskButton_Click"/>
+            <ListBox x:Name="EditTaskBox" Height="100" Opacity="0.1"/>
+        </StackPanel>
+
+
+    </Grid>
+
+</Window>
